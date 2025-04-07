@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="index.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <script src="index.js" defer></script>
+    <script src="https://kit.fontawesome.com/82aa330d61.js" crossorigin="anonymous"></script>
     <style>
     body {
       font-family: 'Montserrat';
@@ -15,18 +16,29 @@
   </head>
   <body>
     <div style="display: flex; flex-direction: column;">
-      <div style="display: flex; flex-direction: row; gap: 1em">
-        <div style="padding: 1em; background-color: #2C3D51;">
-          <img
-            src="https://npip99.github.io/images/logo3.png"
-          />
+      <div style="display: flex; flex-direction: row; gap: 1em; justify-content: space-between">
+        <div style="display: flex; flex-direction: row; gap: 1em">
+            <div style="margin-left: 5em; padding-top: 2em; padding-left: 1em; padding-right: 1em; padding-bottom: 2em; background-color: #2C3D51;">
+            <img
+              src="https://npip99.github.io/images/logo3.png" width="125" height="auto"
+            />
+          </div>
+          <div class="pages">
+            <h1>Home</h1>
+            <h1>Your Work</h1>
+            <h1>Clients</h1>
+          </div>
         </div>
-        <div class="pages">
-          <h1>Home</h1>
-          <h1>Your Work</h1>
-          <h1>Clients</h1>
+        <div style="display: flex; flex-direction: row; gap: 5em; align-items: center; padding-right: 10em">
+          <i class="fa-solid fa-envelope fa-3x"></i>
+          <i class="fa-solid fa-bell fa-3x"></i>
+          <i class="fa-solid fa-user fa-3x"></i>
         </div>
       </div>
+      <div style="margin-left: 5em">
+        <h1>Browse Contests</h1>
+      </div>
+      
     </div>
   </body>
 </html>
