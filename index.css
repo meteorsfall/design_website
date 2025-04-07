@@ -1,0 +1,6 @@
+.pages {
+    display: flex;
+    flex-direction: row;
+    font-size: .6em;
+    gap: 2em;
+}
