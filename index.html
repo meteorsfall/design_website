@@ -18,13 +18,13 @@
     <div style="display: flex; flex-direction: column;">
       <div style="display: flex; flex-direction: row; gap: 1em; justify-content: space-between">
         <div style="display: flex; flex-direction: row; gap: 1em">
+          <a href = "#">
             <div style="margin-left: 4.5em; padding-top: 1.7em; padding-left: 1em; padding-right: 1em; padding-bottom: 1.7em; background-color: #2C3D51;">
-            <a href = "#">
               <img
                 src="https://npip99.github.io/images/logo3.png" width="125" height="auto"
               />
-            </a>
-          </div>
+            </div>
+          </a>
           <div class="pages">
               <div style="display: flex; flex-direction: row; gap: .2em;">
                 <a href = "index.html">
@@ -47,9 +47,26 @@
           </div>
         </div>
         <div style="display: flex; flex-direction: row; gap: 5em; align-items: center; padding-right: 8em">
-          <i class="fa-solid fa-envelope fa-2x" style="color: #2C3D51"></i>
-          <i class="fa-solid fa-bell fa-2x" style="color: #2C3D51"></i>
-          <i class="fa-solid fa-user-circle fa-4x" style="color: #2C3D51"></i>
+          <a href="#">
+            <i class="fa-solid fa-envelope fa-2x" style="color: #2C3D51"></i>
+          </a>
+          <div class="parent" style="position: relative;">
+            <i class="fa-solid fa-bell fa-2x" onclick="showMessages()" style="color: #2C3D51"></i>
+            <div class="child" id="messages" style="position: absolute; right: -2.9em; top: 4.1em; width: 390px; height: 275px; border: 1px solid black; background-color: rgba(255, 255, 255, 0.6); z-index: 1;">
+              <div class="message" style="display: flex; flex-direction: row; border-bottom: 1px solid black;">
+                <div style="margin-top: 1em; margin-left: .65em; margin-bottom: .6em; margin-right: .85em;">
+                  <img src="https://npip99.github.io/images/nodesign.png">
+                </div>
+                <div style="display: flex; flex-direction: column; margin-top: .7em; gap: 1em; font-size: .85em;">
+                  <div style="font-weight:550;"> rob22922 declined your request </div>
+                  <div style="color: gray;"> 25 minutes ago </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#">
+            <i class="fa-solid fa-user-circle fa-4x" style="color: #2C3D51"></i>
+          </a>
         </div>
       </div>
       <div style="margin-left: 1.8em; margin-top: .8em; font-size: 2.5em">
