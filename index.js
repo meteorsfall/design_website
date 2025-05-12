@@ -69,3 +69,59 @@ for (let i = 0; i < icon2Elems.length; i++){
         this.classList.toggle("active");
     });
 }
+
+function renderContests(contests) {
+    contestsHTML = '<hr style="margin-left:5em; margin-right:5em; margin-top: 1em; margin-bottom: 0em;">'
+    for(contest of contests){
+        tagsHTML = "";
+        for(let [i, tag] of contest.tags.entries()){
+            if (i == 0){
+                tagsHTML += `<div class="small-button box-highlight"> ${tag} </div>`;
+            }
+            else {
+                tagsHTML += `<div class="small-button"> ${tag} </div>`;
+            }
+        }
+
+        contestsHTML += `
+        <div class="message" style="display: flex; flex-direction: row; margin-left:5em; margin-right: 5em; margin-top: 0em; margin-bottom: 0em; gap: 1em; border-bottom: 1px solid #6F6F6F; padding: 1em 0;">
+            <div class="nodesign" style="background-color: white;"> </div>
+            <div style="display: flex; flex-direction: column; width: 40em; gap: .4em;">
+              <h1 style="margin-top: .5em;"> ${contest.title} </h1>
+              <p style="color: #6F6F6F; margin-top: 0em; margin-bottom:0em;"> ${contest.description} </p>
+              <p style="color: #6F6F6F"> <i>${contest.author}</i> </p>
+              <div style="display: flex; flex-direction: row; gap: 1em;">
+                ${tagsHTML}
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1.5em; color:#6F6F6F; justify-content: center; margin-left: auto; margin-right: 5em;">
+              <div style="display: flex; flex-direction: row; gap: 1em;">
+                <i class="fa-regular fa-image"> </i>
+                <div class="gray-text"> 0 designs </div>
+              </div>
+              <div style="display:flex; flex-direction: row; gap: 1em;">
+                <i class="fa-regular fa-clock"> </i>
+                <div> 4 days </div>
+              </div>
+              <div style="display:flex; flex-direction: row; gap: 1em;">
+                <i class="fa-solid fa-comment"> </i>
+                <div> No feedback </div>
+              </div>
+              <div class="small-button turn-dark watch" style="width:4em; color: #000000;"> Watch </div>
+            </div>
+      </div>
+`;
+        document.getElementById("contests").innerHTML = contestsHTML;
+    }
+}
+
+window.onload = function() {
+    fetch('/contests.json')
+      .then(r => r.json())
+        .then(data => {
+            const contests = data
+            console.log(contests);
+            renderContests(contests)
+        })
+        .catch(error => console.error('Error:', error));
+}
