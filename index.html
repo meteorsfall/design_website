@@ -156,6 +156,18 @@
       </div>
       <div style="margin-left:5em; margin-top: 5em; color: #6F6F6F"> Showing 830 contests </div>
       <div id="contests"> </div>
+      <div class = "small-button" id="add-post-button" style="margin-left: 50%; margin-top: 5em; width: 100px;"> Add Post </div>
+      <div id="add-post-form" style="margin-top: 5em; margin-left: 45%; display: none;">
+        <form action="http://localhost:8000/submit" method="post">
+          <label for="title">Title</label><br>
+          <input type="text" id="title" name="title"><br>
+          <label for="author">Author</label><br>
+          <input type="text" id="author" name="author"><br>
+          <label for="description">Description</label><br>
+          <input type="text" id="description" name="description"><br><br>
+          <input type="submit" value="Post">
+        </form>
+      </div>
       <div style="display: flex; flex-direction: column; gap: 1em; margin-top: 3em; margin-bottom: 0em; padding-bottom: 0em; background-color: #2C3D51; display: flex; align-items: center;">
         <div style="margin-top: 2em">
           <img src="https://npip99.github.io/images/logo2.png" height=43px width=auto />

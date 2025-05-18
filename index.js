@@ -115,7 +115,7 @@ function renderContests(contests) {
     }
 }
 
-window.onload = function() {
+async function fetch_contests() {
     fetch('/contests.json')
       .then(r => r.json())
         .then(data => {
@@ -124,4 +124,39 @@ window.onload = function() {
             renderContests(contests)
         })
         .catch(error => console.error('Error:', error));
+}
+
+const addPostButton = document.getElementById("add-post-button");
+const addPostForm = document.getElementById("add-post-form");
+addPostButton.addEventListener("click", function() {
+    this.style.display = "none";
+    addPostForm.style.display="block";
+});
+
+addPostForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch("/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (res.ok){
+        alert("Submission saved!");
+        e.target.reset();
+        fetch_contests();
+    } else {
+        alert("Submission failed.");
+    }
+});
+
+
+window.onload = function() {
+    fetch_contests();
 }
