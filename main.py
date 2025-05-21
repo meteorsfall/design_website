@@ -1,7 +1,12 @@
-from fastapi import FastAPI, Response, Request, Form
+from fastapi import FastAPI, Response, Request, Form, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import os
+from pydantic import BaseModel
+from typing import List
+import psycopg
+
+DATABASE_URL = "postgresql://postgres:password@localhost/mydb"
 
 app = FastAPI()
 
@@ -11,6 +16,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class ContestIn(BaseModel):
+    title: str
+    author: str
+    description: str
+    tags: List[str]
+    designs: int
+    days: int
+
+class ContestOut(ContestIn):
+    pass
+
+def get_connection():
+    return psycopg.connect(DATABASE_URL)
 
 @app.get("/index.html")
 def get_index_html():
@@ -24,25 +43,32 @@ def get_index_css():
 def get_index_js():
     return Response(open("index.js").read(), media_type="application/javascript")
 
-@app.get("/contests.json")
-def get_contests_json() :
-    return Response(open("contests.json").read(), media_type="application/json")
+@app.get("/contests.json", response_model=List[ContestOut])
+def get_contests_json():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT title, author, description, tags, designs, days FROM contests;")
+            rows = cur.fetchall()
+            result = []
+            for row in rows:
+                result.append({
+                    "title": row[0],
+                    "author": row[1],
+                    "description": row[2],
+                    "tags": [tag.strip() for tag in row[3].split(',')],
+                    "designs": row[4],
+                    "days": row[5]
+                })
+            return result
 
 @app.post("/submit")
-async def submit(request: Request):
-    data = await request.json()
-    contest = {
-        "title": data["title"],
-        "author": data["author"],
-        "description": data["description"],
-    }
-
-    contest.update({"tags": [], "designs": 0, "days": 0})
-    with open("contests.json", "r") as f:
-        contests = json.load(f)
-
-    contests.append(contest)
-
-    with open("contests.json", "w") as f:
-        json.dump(contests, f, indent=4)
-    return
+async def submit(contest: ContestIn):
+    tags_str = ",".join(contest.tags)
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO contests (title, author, description, tags, designs, days)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (contest.title, contest.author, contest.description, tags_str, contest.designs, contest.days))
+            conn.commit()
+    return {"message": "Contest added!"}
